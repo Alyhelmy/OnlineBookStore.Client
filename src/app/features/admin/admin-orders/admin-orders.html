@@ -1,0 +1,158 @@
+<section class="orders-page">
+  <header class="page-header">
+    <div>
+      <p class="page-eyebrow">Admin panel</p>
+      <h1 class="page-title">Manage orders</h1>
+      <p class="page-lede">
+        Search by customer, email, or order number to quickly inspect the orders you need.
+      </p>
+    </div>
+
+    
+  </header>
+
+  <section class="filter-card">
+    <div class="filter-grid">
+      <label class="field">
+        <span class="field-label">Find order</span>
+        <input
+          type="text"
+          name="searchTerm"
+          placeholder="Search by order #, customer, or email"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="applySearch()">
+      </label>
+
+      <label class="field">
+        <span class="field-label">Status</span>
+        <select
+          name="selectedStatus"
+          [(ngModel)]="selectedStatus"
+          (ngModelChange)="applySearch()">
+          <option value="">All statuses</option>
+          @for (status of statuses; track status) {
+            <option [value]="status">{{ status }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    <div class="filter-actions">
+      <button type="button" class="btn-primary" (click)="showAll()">Show all orders</button>
+      <button type="button" class="btn-secondary" (click)="clearFilters()">Clear filters</button>
+
+      @if (hasFilters || showAllOrders) {
+        <p class="results-note">
+          Showing {{ visibleOrders.length }} of {{ orders.length }} orders
+        </p>
+      } @else {
+        <p class="results-note">Use the filters above to focus on a specific customer order.</p>
+      }
+    </div>
+  </section>
+
+  @if (isLoading) {
+    <p class="state state-muted">Loading orders...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="banner banner-error">{{ errorMessage }}</p>
+  }
+
+  @if (successMessage) {
+    <p class="banner banner-success">{{ successMessage }}</p>
+  }
+
+  @if (!isLoading && orders.length === 0) {
+    <div class="empty-state">
+      <p class="empty-title">No orders found</p>
+      <p class="empty-text">Orders will appear here once customers complete checkout.</p>
+    </div>
+  }
+
+  @if (!isLoading && orders.length > 0 && !hasFilters && !showAllOrders) {
+    <div class="empty-state">
+      <p class="empty-title">Start with a search</p>
+      <p class="empty-text">Enter a customer name, email, or order number, or show all orders when needed.</p>
+    </div>
+  }
+
+  @if (!isLoading && orders.length > 0 && visibleOrders.length === 0 && (hasFilters || showAllOrders)) {
+    <div class="empty-state">
+      <p class="empty-title">No matching orders</p>
+      <p class="empty-text">Try a different customer name, email, order number, or status.</p>
+    </div>
+  }
+
+  @if (visibleOrders.length > 0) {
+    <ul class="orders-list">
+      @for (order of visibleOrders; track order.id) {
+        <li class="order-card">
+          <div class="order-card-head">
+            <div>
+              <h2 class="order-id">Order #{{ order.id }}</h2>
+              <p class="order-date">{{ order.createdAt | date:'medium' }}</p>
+            </div>
+
+            <div class="status-control">
+              <label class="field-label" [for]="'status-' + order.id">Status</label>
+              <select
+                [id]="'status-' + order.id"
+                [ngModel]="order.status"
+                (ngModelChange)="updateStatus(order, $event)">
+                @for (status of statuses; track status) {
+                  <option [value]="status">{{ status }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <div class="order-meta">
+            <div>
+              <span class="meta-label">Customer</span>
+              <p class="meta-value">{{ order.userFullName }}</p>
+            </div>
+            <div>
+              <span class="meta-label">Email</span>
+              <p class="meta-value">{{ order.userEmail }}</p>
+            </div>
+            <div>
+              <span class="meta-label">Total</span>
+              <p class="meta-value total">{{ order.totalAmount }} EGP</p>
+            </div>
+          </div>
+
+          <div class="order-items-section">
+            <h3 class="items-heading">Items</h3>
+
+            <ul class="order-items">
+              @for (item of order.items; track item.bookId) {
+                <li class="order-line">
+                  <div class="line-main">
+                    <p class="line-title">{{ item.bookTitle }}</p>
+                    <p class="line-meta">{{ item.author }}</p>
+                  </div>
+
+                  <dl class="line-stats">
+                    <div>
+                      <dt>Each</dt>
+                      <dd>{{ item.unitPrice }} EGP</dd>
+                    </div>
+                    <div>
+                      <dt>Qty</dt>
+                      <dd>{{ item.quantity }}</dd>
+                    </div>
+                    <div class="line-sum">
+                      <dt>Sum</dt>
+                      <dd>{{ item.totalPrice }} EGP</dd>
+                    </div>
+                  </dl>
+                </li>
+              }
+            </ul>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</section>

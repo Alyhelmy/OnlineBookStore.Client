@@ -1,0 +1,227 @@
+<section class="admin-books-page">
+  <header class="page-header">
+    <div>
+      <p class="page-eyebrow">Admin panel</p>
+      <h1 class="page-title">Manage books</h1>
+      <p class="page-lede">
+        Add new titles, update existing listings, and keep pricing and stock aligned with the catalog.
+      </p>
+    </div>
+
+    
+  </header>
+
+  @if (errorMessage) {
+    <p class="banner banner-error">{{ errorMessage }}</p>
+  }
+
+  @if (successMessage) {
+    <p class="banner banner-success">{{ successMessage }}</p>
+  }
+
+  <section class="editor-card">
+    <div class="section-heading">
+      <div>
+        <p class="section-eyebrow">Book editor</p>
+        <h2 class="section-title">{{ editingBookId ? 'Edit book' : 'Add new book' }}</h2>
+      </div>
+      <p class="section-note">
+        {{ editingBookId ? 'Update the selected title and save your changes.' : 'Fill in the details to publish a new title.' }}
+      </p>
+    </div>
+
+    <form #bookFormRef="ngForm" (ngSubmit)="saveBook()" class="book-form">
+      <label class="field">
+        <span class="field-label">Title</span>
+        <input
+          type="text"
+          name="title"
+          [(ngModel)]="bookForm.title"
+          #titleInput="ngModel"
+          required
+          minlength="2"
+          maxlength="150"
+          />
+
+          @if (titleInput.invalid && titleInput.touched) {
+            <small class="field-error">Title must be at least 2 characters.</small>
+          }
+
+      </label>
+
+      <label class="field">
+        <span class="field-label">Author</span>
+        <input
+          type="text"
+          name="author"
+          [(ngModel)]="bookForm.author"
+          #authorInput="ngModel"
+          required
+          minlength="2"
+          maxlength="100"
+           />
+
+           @if (authorInput.invalid && authorInput.touched) {
+            <small class="field-error">Author must be at least 2 characters.</small>
+          }
+
+      </label>
+
+      <label class="field">
+        <span class="field-label">Category</span>
+        <input
+          type="text"
+          name="category"
+          [(ngModel)]="bookForm.category"
+          #categoryInput="ngModel"
+          required
+          minlength="2"
+          maxlength="80"
+          />
+
+          @if (categoryInput.invalid && categoryInput.touched) {
+            <small class="field-error">Category must be at least 2 characters.</small>
+          }
+
+      </label>
+
+      <label class="field">
+        <span class="field-label">Price</span>
+        <input
+          type="number"
+          name="price"
+          [(ngModel)]="bookForm.price"
+          #priceInput="ngModel"
+          required
+          min="0.01"
+          />
+
+          @if (priceInput.invalid && priceInput.touched) {
+            <small class="field-error">Price must be greater than 0.</small>
+          }
+
+      </label>
+
+      <label class="field">
+        <span class="field-label">Stock quantity</span>
+        <input
+          type="number"
+          name="stockQuantity"
+          [(ngModel)]="bookForm.stockQuantity"
+          #stockInput="ngModel"
+          required
+          min = "0"
+          />
+
+        @if (stockInput.invalid && stockInput.touched) {
+          <small class="field-error">Stock quantity must be greater than 0.</small>
+        }
+
+      </label>
+
+      <label class="field">
+        <span class="field-label">Image URL</span>
+        <input
+          type="text"
+          name="imageUrl"
+          [(ngModel)]="bookForm.imageUrl"
+          #imageUrlInput="ngModel"
+          maxlength="500"
+          />
+
+
+          @if (imageUrlInput.invalid && imageUrlInput.touched) {
+            <small class="field-error">Image URL must be at least 2 characters.</small>
+          }
+
+      </label>
+
+      <label class="field full-width">
+        <span class="field-label">Description</span>
+        <textarea
+          name="description"
+          [(ngModel)]="bookForm.description"
+          #descriptionInput="ngModel"
+          required
+          minlength="5"
+          maxlength="1000">        
+        </textarea>
+
+        @if (descriptionInput.invalid && descriptionInput.touched) {
+          <small class="field-error">Description must be at least 5 characters.</small>
+        }
+
+      </label>
+
+      <div class="form-actions full-width">
+        <button type="submit" class="btn-primary" [disabled]=" bookFormRef.invalid || isSaving">
+          {{ isSaving ? 'Saving...' : editingBookId ? 'Update book' : 'Create book' }}
+        </button>
+
+        @if (editingBookId) {
+          <button type="button" class="btn-secondary" (click)="cancelEdit()">
+            Cancel
+          </button>
+        }
+      </div>
+    </form>
+  </section>
+
+  @if (isLoading) {
+    <p class="state state-muted">Loading books...</p>
+  }
+
+  @if (!isLoading && books.length === 0) {
+    <div class="empty-state">
+      <p class="empty-title">No books found</p>
+      <p class="empty-text">Create your first listing to start building the bookstore catalog.</p>
+    </div>
+  }
+
+  @if (books.length > 0) {
+    <section class="inventory-card">
+      <div class="section-heading inventory-heading">
+        <div>
+          <p class="section-eyebrow">Inventory</p>
+          <h2 class="section-title">Current catalog</h2>
+        </div>
+        <p class="section-note">Review stock, pricing, and category information for each title.</p>
+      </div>
+
+      <div class="table-shell">
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (book of books; track book.id) {
+              <tr>
+                <td class="cell-id">#{{ book.id }}</td>
+                <td class="cell-title">{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>
+                  <span class="category-pill">{{ book.category }}</span>
+                </td>
+                <td class="cell-price">{{ book.price }} EGP</td>
+                <td>{{ book.stockQuantity }}</td>
+                <td class="table-actions">
+                  <button type="button" class="btn-table btn-edit" (click)="editBook(book)">Edit</button>
+                  <button type="button" class="btn-table btn-delete" (click)="deleteBook(book)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+  }
+</section>

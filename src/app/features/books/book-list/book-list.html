@@ -1,0 +1,65 @@
+<section class="catalog">
+  <header class="catalog-hero">
+    <div class="catalog-hero-copy">
+      <p class="catalog-eyebrow">Browse the collection</p>
+      <h1 class="catalog-title">Find your next read</h1>
+      <p class="catalog-lede">
+        Curated titles with clear pricing and availability - add favorites to your cart in one tap.
+      </p>
+    </div>
+
+    
+  </header>
+
+  @if (isLoading) {
+    <p class="state state-muted">Loading books...</p>
+  }
+
+  @if (errorMessage) {
+    <p class="banner banner-error">{{ errorMessage }}</p>
+  }
+
+  <div class="books-grid">
+    @for (book of books; track book.id) {
+      <article class="book-card">
+        <div class="book-card-top">
+          <div class="book-card-cover" aria-hidden="true">
+            <span>{{ book.title.charAt(0) }}</span>
+          </div>
+
+          <div class="book-card-heading">
+            <span class="book-category">{{ book.category }}</span>
+            <h2 class="book-title">{{ book.title }}</h2>
+            <p class="book-author">by {{ book.author }}</p>
+          </div>
+        </div>
+
+        <p class="book-desc">{{ book.description }}</p>
+
+        <div class="book-meta">
+          <div class="book-price-row">
+            <span class="book-price">{{ book.price }} EGP</span>
+            @if (book.stockQuantity <= 0) {
+              <span class="badge badge-out">Out of stock</span>
+            } @else if (book.stockQuantity <= 5) {
+              <span class="badge badge-low">Only {{ book.stockQuantity }} left</span>
+            } @else {
+              <span class="badge badge-in">In stock</span>
+            }
+          </div>
+        </div>
+
+        <div class="book-actions">
+          <a class="btn-ghost" [routerLink]="['/books', book.id]">Details</a>
+          <button
+            type="button"
+            class="btn-cart"
+            (click)="addToCart(book.id)"
+            [disabled]="book.stockQuantity <= 0">
+            Add to cart
+          </button>
+        </div>
+      </article>
+    }
+  </div>
+</section>

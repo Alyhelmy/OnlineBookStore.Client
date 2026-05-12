@@ -1,0 +1,79 @@
+<section class="details-page">
+  <header class="page-header">
+    <div>
+      <p class="page-eyebrow">Book details</p>
+      <h1 class="page-title">{{ book?.title || 'Book details' }}</h1>
+      <p class="page-lede">
+        Review the summary, availability, and pricing before adding this title to your cart.
+      </p>
+    </div>
+
+    <a routerLink="/books" class="back-link">Back to catalog</a>
+  </header>
+
+  @if (isLoading) {
+    <p class="state state-muted">Loading book details...</p>
+  }
+
+  @if (errorMessage) {
+    <div class="empty-state">
+      <p class="empty-title">{{ errorMessage }}</p>
+      <p class="empty-text">Try browsing the catalog again to pick another title.</p>
+      <a routerLink="/books" class="btn-primary-link">Browse books</a>
+    </div>
+  }
+
+  @if (book) {
+    <article class="details-card">
+      <div class="details-main">
+        <div class="details-cover" aria-hidden="true">
+          <span>{{ book.title.charAt(0) }}</span>
+        </div>
+
+        <div class="details-copy">
+          <div class="details-top">
+            <span class="book-category">{{ book.category }}</span>
+
+            @if (book.stockQuantity <= 0) {
+              <span class="badge badge-out">Out of stock</span>
+            } @else if (book.stockQuantity <= 5) {
+              <span class="badge badge-low">Only {{ book.stockQuantity }} left</span>
+            } @else {
+              <span class="badge badge-in">In stock</span>
+            }
+          </div>
+
+          <p class="book-author">by {{ book.author }}</p>
+          <p class="book-description">{{ book.description }}</p>
+
+          <dl class="details-stats">
+            <div>
+              <dt>Price</dt>
+              <dd class="price">{{ book.price }} EGP</dd>
+            </div>
+            <div>
+              <dt>Available stock</dt>
+              <dd>{{ book.stockQuantity }}</dd>
+            </div>
+            <div>
+              <dt>Category</dt>
+              <dd>{{ book.category }}</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button
+          type="button"
+          class="btn-cart"
+          (click)="addToCart()"
+          [disabled]="book.stockQuantity <= 0">
+          Add to cart
+        </button>
+
+        <a routerLink="/cart" class="btn-ghost">Go to cart</a>
+      </div>
+    </article>
+  }
+</section>

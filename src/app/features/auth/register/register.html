@@ -1,0 +1,79 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <p class="auth-eyebrow">Join the bookstore</p>
+    <h1 class="auth-title">Create account</h1>
+    <p class="auth-sub">Save orders, revisit favorites, and check out faster next time.</p>
+
+    @if (errorMessage) {
+      <p class="banner banner-error">{{ errorMessage }}</p>
+    }
+
+    <form #registerForm="ngForm" (ngSubmit)="register()" class="auth-form">
+      <label class="field">
+        <span class="field-label">Full name</span>
+        <input
+          type="text"
+          name="fullName"
+          [(ngModel)]="registerRequest.fullName"
+          #fullNameInput="ngModel"
+          placeholder="Aly Helmy"
+          autocomplete="name"
+          required
+          minlength="2"
+          maxlength="100"
+        />
+
+        @if (fullNameInput.invalid && fullNameInput.touched) {
+          <small class="field-error">Full name must be at least 2 characters.</small>
+        }
+      </label>
+
+      <label class="field">
+        <span class="field-label">Email</span>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="registerRequest.email"
+          #emailInput="ngModel"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+          email
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+        />
+
+        @if (emailInput.invalid && emailInput.touched) {
+          <small class="field-error">Please enter a valid email.</small>
+        }
+      </label>
+
+      <label class="field">
+        <span class="field-label">Password</span>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="registerRequest.password"
+          #passwordInput="ngModel"
+          placeholder="••••••••"
+          autocomplete="new-password"
+          required
+          minlength="6"
+          maxlength="100"
+        />
+
+        @if (passwordInput.invalid && passwordInput.touched) {
+          <small class="field-error">Password must be at least 6 characters.</small>
+        }
+      </label>
+
+      <button type="submit" class="btn-primary" [disabled]="registerForm.invalid || isLoading">
+        {{ isLoading ? 'Creating account…' : 'Register' }}
+      </button>
+    </form>
+
+    <p class="auth-footer">
+      Already have an account?
+      <a routerLink="/login">Sign in</a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,354 @@
+.admin-books-page {
+  padding-bottom: 40px;
+}
+
+
+
+.page-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
+  gap: 20px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.page-eyebrow,
+.section-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 8px;
+}
+
+.page-title {
+  font-size: clamp(1.8rem, 4vw, 2.3rem);
+  margin: 0 0 8px;
+}
+
+.page-lede {
+  margin: 0;
+  color: var(--color-text-muted);
+  max-width: 42rem;
+  line-height: 1.6;
+}
+
+.summary-chip {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  border-radius: calc(var(--radius-lg) + 4px);
+  background:
+    radial-gradient(circle at top right, rgba(139, 69, 19, 0.16), transparent 48%),
+    linear-gradient(135deg, var(--color-surface-elevated), rgba(255, 248, 240, 0.95));
+  border: 1px solid rgba(139, 69, 19, 0.14);
+  box-shadow: var(--shadow-sm);
+}
+
+.summary-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent-hover);
+}
+
+.summary-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  line-height: 1.1;
+  color: var(--color-primary-hover);
+}
+
+.banner {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.banner-error {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+  border: 1px solid rgba(180, 35, 24, 0.2);
+}
+
+.banner-success {
+  background: var(--color-success-soft);
+  color: var(--color-success);
+  border: 1px solid rgba(15, 107, 65, 0.18);
+}
+
+.editor-card,
+.inventory-card {
+  margin-bottom: 24px;
+  padding: clamp(20px, 3vw, 26px);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.section-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.section-note {
+  margin: 0;
+  color: var(--color-text-muted);
+  max-width: 28rem;
+  line-height: 1.5;
+}
+
+.book-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+}
+
+.field input,
+.field textarea {
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.12);
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-table {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease, background 0.15s ease;
+}
+
+.btn-primary {
+  border: none;
+  color: #fff;
+  background: linear-gradient(165deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover:not(:disabled),
+.btn-edit:hover,
+.btn-delete:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-text-soft);
+  color: var(--color-text);
+}
+
+.state {
+  margin: 0 0 16px;
+}
+
+.state-muted {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  padding: clamp(40px, 10vw, 72px) 24px;
+  background: var(--color-surface-elevated);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+}
+
+.empty-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  margin: 0 0 10px;
+}
+
+.empty-text {
+  margin: 0;
+  color: var(--color-text-muted);
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.table-shell {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 780px;
+}
+
+th,
+td {
+  padding: 14px 16px;
+  text-align: left;
+  border-top: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+thead th {
+  border-top: none;
+  background: var(--color-bg-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+}
+
+tbody tr:hover {
+  background: rgba(139, 69, 19, 0.035);
+}
+
+.cell-id {
+  font-weight: 700;
+  color: var(--color-text-soft);
+}
+
+.cell-title {
+  font-weight: 700;
+}
+
+.cell-price {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-primary-hover);
+}
+
+.category-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent-hover);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-table {
+  min-height: 38px;
+  padding: 8px 14px;
+}
+
+.btn-edit {
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-accent);
+}
+
+.btn-edit:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.btn-delete {
+  border: none;
+  background: var(--color-danger);
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #8b1f15;
+}
+
+@media (max-width: 760px) {
+  .page-header,
+  .book-form {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading {
+    align-items: start;
+  }
+
+  .field-error {
+  color: #c0392b;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+
+}

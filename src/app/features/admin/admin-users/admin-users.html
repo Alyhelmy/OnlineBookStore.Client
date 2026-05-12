@@ -1,0 +1,59 @@
+<h1>Admin Users</h1>
+
+@if (isLoading) {
+  <p>Loading users...</p>
+}
+
+@if (errorMessage) {
+  <p class="error">{{ errorMessage }}</p>
+}
+
+@if (successMessage) {
+  <p class="success">{{ successMessage }}</p>
+}
+
+@if (!isLoading && users.length === 0) {
+  <p>No users found.</p>
+}
+
+@if (users.length > 0) {
+  <section class="users-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Created At</th>
+          <th>Change Role</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (user of users; track user.id) {
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.fullName }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <span class="role-badge" [class.admin]="user.role === 'Admin'">
+                {{ user.role }}
+              </span>
+            </td>
+            <td>{{ user.createdAt | date:'medium' }}</td>
+            <td>
+              <select
+                [ngModel]="user.role"
+                (ngModelChange)="updateRole(user, $event)">
+                @for (role of roles; track role) {
+                  <option [value]="role">{{ role }}</option>
+                }
+              </select>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+}

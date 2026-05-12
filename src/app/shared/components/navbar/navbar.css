@@ -1,0 +1,134 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 252, 247, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: clamp(28px, 5vw, 48px);
+}
+
+.navbar-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 12px clamp(16px, 4vw, 28px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.brand:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.brand-icon {
+  display: flex;
+  color: var(--color-primary);
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cart-badge {
+  background: #f59e0b;
+  color: #111827;
+  font-weight: bold;
+  border-radius: 999px;
+  padding: 2px 7px;
+  font-size: 12px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+
+.nav-links a {
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-links a:hover {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-hover);
+}
+
+.nav-links a.active {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-hover);
+}
+
+.btn-outline {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.btn-outline:hover {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+  background: var(--color-danger-soft);
+}
+
+.cta-register {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+.cta-register:hover {
+  background: var(--color-primary-hover) !important;
+  color: #fff !important;
+}
+
+.cta-register.active {
+  background: var(--color-primary-hover) !important;
+  color: #fff !important;
+}
+
+@media (max-width: 520px) {
+  .brand-text {
+    font-size: 1rem;
+  }
+
+  .nav-links a {
+    padding: 6px 10px;
+  }
+}

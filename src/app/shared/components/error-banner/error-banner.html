@@ -1,0 +1,12 @@
+@if (error$ | async; as error) {
+  <div class="error-banner">
+    @if (error$ | async; as error) {
+  <div class="error-banner">
+    <strong>{{ error.message }}</strong>
+    <button (click)="clear()">×</button>
+  </div>
+}
+
+    <button (click)="clear()">×</button>
+  </div>
+}

@@ -1,0 +1,29 @@
+<div class="toast-stack" aria-live="polite" aria-atomic="true">
+  @for (notification of notificationService.notifications(); track notification.id) {
+    <aside
+      class="toast"
+      [class.toast-success]="notification.type === 'success'"
+      [class.toast-error]="notification.type === 'error'">
+      <div class="toast-copy">
+        <p class="toast-title">
+          @if (notification.type === 'success') {
+            Success
+          } @else if (notification.type === 'error') {
+            Error
+          } @else {
+            Notice
+          }
+        </p>
+        <p class="toast-message">{{ notification.message }}</p>
+      </div>
+
+      <button
+        type="button"
+        class="toast-close"
+        (click)="notificationService.dismiss(notification.id)"
+        aria-label="Dismiss notification">
+        ×
+      </button>
+    </aside>
+  }
+</div>

@@ -1,0 +1,49 @@
+.users-table {
+  background: white;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: #f3f4f6;
+}
+
+select {
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.role-badge {
+  background: #e5e7eb;
+  color: #111827;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.role-badge.admin {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.success {
+  color: green;
+  font-weight: bold;
+}

@@ -1,0 +1,74 @@
+<section class="orders-page">
+  <header class="page-header">
+    <p class="page-eyebrow">Account</p>
+    <h1 class="page-title">My orders</h1>
+    @if (!isLoading && orders.length > 0) {
+      <p class="page-lede">{{ orders.length }} {{ orders.length === 1 ? 'order' : 'orders' }} placed</p>
+    }
+  </header>
+
+  @if (isLoading) {
+    <p class="state state-muted">Loading orders…</p>
+  }
+
+  @if (errorMessage) {
+    <p class="banner banner-error">{{ errorMessage }}</p>
+  }
+
+  @if (!isLoading && orders.length === 0) {
+    <div class="empty-state">
+      <p class="empty-title">No orders yet</p>
+      <p class="empty-text">When you check out, your receipts and shipment details will show up here.</p>
+      <a routerLink="/books" class="btn-primary-link">Start shopping</a>
+    </div>
+  }
+
+  @if (orders.length > 0) {
+    <ul class="orders-list">
+      @for (order of orders; track order.id) {
+        <li class="order-card">
+          <div class="order-card-head">
+            <div>
+              <h2 class="order-id">Order #{{ order.id }}</h2>
+              <p class="order-date">{{ order.createdAt | date:'medium' }}</p>
+            </div>
+            <span class="status-pill">{{ order.status }}</span>
+          </div>
+
+          <div class="order-total-row">
+            <span class="muted">Total</span>
+            <span class="order-total">{{ order.totalAmount }} EGP</span>
+          </div>
+
+          <div class="order-items-section">
+            <h3 class="items-heading">Items</h3>
+            <ul class="order-items">
+              @for (item of order.items; track item.bookId) {
+                <li class="order-line">
+                  <div class="line-main">
+                    <p class="line-title">{{ item.bookTitle }}</p>
+                    <p class="line-meta">{{ item.author }}</p>
+                  </div>
+                  <dl class="line-stats">
+                    <div>
+                      <dt>Each</dt>
+                      <dd>{{ item.unitPrice }} EGP</dd>
+                    </div>
+                    <div>
+                      <dt>Qty</dt>
+                      <dd>{{ item.quantity }}</dd>
+                    </div>
+                    <div class="line-sum">
+                      <dt>Sum</dt>
+                      <dd>{{ item.totalPrice }} EGP</dd>
+                    </div>
+                  </dl>
+                </li>
+              }
+            </ul>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</section>
