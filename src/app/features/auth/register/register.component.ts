@@ -27,15 +27,6 @@ export class RegisterComponent {registerRequest: RegisterRequest = {
   register(): void {
     this.errorMessage = '';
 
-    if (
-      !this.registerRequest.fullName ||
-      !this.registerRequest.email ||
-      !this.registerRequest.password
-    ) {
-      this.errorMessage = 'All fields are required.';
-      return;
-    }
-
     this.isLoading = true;
 
     this.authService.register(this.registerRequest).subscribe({

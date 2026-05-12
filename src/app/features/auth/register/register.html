@@ -19,12 +19,29 @@
           placeholder="Aly Helmy"
           autocomplete="name"
           required
-          minlength="2"
+          minlength="6"
           maxlength="100"
+          pattern="^[A-Za-zà-ÿ' -]+$"
         />
 
         @if (fullNameInput.invalid && fullNameInput.touched) {
-          <small class="field-error">Full name must be at least 2 characters.</small>
+          <small class="field-error">
+            @if (fullNameInput.errors?.['required']) {
+              Full name is required.
+            }
+
+            @if (fullNameInput.errors?.['minlength']) {
+              Full name must be at least 6 characters.
+            }
+
+            @if (fullNameInput.errors?.['maxlength']) {
+              Full name must be at most 100 characters.
+            }
+            @if (fullNameInput.errors?.['pattern']) {
+              Full name can only contain letters, spaces, and hyphens.
+            }
+
+          </small>
         }
       </label>
 
@@ -40,10 +57,23 @@
           required
           email
           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          maxlength="256"
         />
 
         @if (emailInput.invalid && emailInput.touched) {
-          <small class="field-error">Please enter a valid email.</small>
+          <small class="field-error">
+            @if (emailInput.errors?.['required']){
+              Email is required.
+            }
+
+            @if (emailInput.errors?.['email']) {
+              Please enter a valid email.
+            }
+          
+            @if (emailInput.errors?.['maxlength']) {
+              Email must be at most 256 characters.
+            }
+          </small>
         }
       </label>
 
@@ -57,12 +87,32 @@
           placeholder="••••••••"
           autocomplete="new-password"
           required
-          minlength="6"
+          minlength="8"
           maxlength="100"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':\&quot;\\|,.<>\/?]).{8,}$"
         />
 
         @if (passwordInput.invalid && passwordInput.touched) {
-          <small class="field-error">Password must be at least 6 characters.</small>
+          <small class="field-error">
+            @if (passwordInput.errors?.['required']) {
+              Password is required.
+            }
+
+            @if (passwordInput.errors?.['minlength']) {
+              Password must be at least 8 characters.
+            }
+
+            @if (passwordInput.errors?.['maxlength']) {
+              Password must be at most 100 characters.
+            }
+            
+            @if (passwordInput.errors?.['pattern']) {
+              Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.
+            }
+
+            
+
+          </small>
         }
       </label>
 
